@@ -41,7 +41,7 @@ export const CreateArticle = ({ submitArticle }) => {
 
   return (
     <Form
-      onClick={(e) => {
+      onSubmit={(e) => {
         e.preventDefault();
         submit();
       }}
@@ -79,7 +79,7 @@ export const CreateArticle = ({ submitArticle }) => {
           }}
           aria-label="Default select example"
         >
-          <option>Open this select menu</option>
+          <option>Choose Category</option>
           {categories.map((category, index) => {
             return (
               <option key={`option-${index}`} value={category.id}>

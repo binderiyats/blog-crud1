@@ -9,6 +9,7 @@ import Home from "./pages/Home";
 import Header from "./component/Header";
 import Articles from "./pages/Articles";
 import SingleArticle from "./pages/SingleArticle";
+import Categories from "./pages/Categories";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/articles" element={<Articles />} />
         <Route path="/articles/:id" element={<SingleArticle />} />
         <Route path="/articles/cat/:categoryId" element={<Articles />} />
+        <Route path="/categories" element={<Categories />} />
       </Routes>
     </diV>
   );
