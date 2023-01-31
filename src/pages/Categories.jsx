@@ -17,7 +17,7 @@ export default function Categories() {
 
   return (
     <div>
-      <div className="container-sm body-container">
+      {/* <div className="container-sm body-container">
         <Heading title="Categories" handleShow={showCreateModal} />
         <CategoryList items={categories} onEdit={showEditModal} />
       </div>
@@ -26,7 +26,7 @@ export default function Categories() {
         handleClose={modalClose}
         show={modalShow}
         title="Create category"
-      />
+      /> */}
     </div>
   );
 }

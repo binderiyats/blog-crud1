@@ -1,46 +1,38 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
 
-export const CreateArticle = () => {
+export default function EditArticle() {
   const [categories, setCategories] = useState([]);
-  const [title, setTitle] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
-  const [categoryId, setCategoryId] = useState("");
-  const [description, setDescription] = useState("");
-  const [text, setText] = useState("");
-  const navigate = useNavigate();
+  const [title, setTitle] = useState();
+  const [imageUrl, setImageUrl] = useState();
+  const [categoryId, setCategoryId] = useState();
+  const [description, setDescription] = useState();
+  const [text, setText] = useState();
+  const { id } = useParams();
+
   useEffect(() => {
-    axios
-      .get(`http://localhost:8000/categories`)
-      .then((res) => {
-        setCategories(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    axios.get(`http://localhost:8000/articles`).then((res) => {
+      setCategories(res.data);
+    });
   }, []);
 
   const submit = () => {
-    const newArticle = {
+    const editedArticle = {
       title,
       imageUrl,
-      categoryId: Number(categoryId),
+      categoryId: Number(id),
       description,
       text,
     };
-
     axios
-      .post(`http://localhost:8000/articles`, newArticle)
+      .patch(`http://localhost:8000/articles/${article.id}`, editedArticle)
       .then((res) => {
-        navigate("/articles");
+        updateArticle(res.data);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => console.log(err));
   };
-
   return (
     <Form
       onSubmit={(e) => {
@@ -52,9 +44,7 @@ export const CreateArticle = () => {
         <Form.Label>Title</Form.Label>
         <Form.Control
           value={title}
-          onChange={(e) => {
-            setTitle(e.target.value);
-          }}
+          onChange={(e) => setTitle(e.target.value)}
           type="text"
           placeholder="Article title"
         />
@@ -64,9 +54,7 @@ export const CreateArticle = () => {
         <Form.Label>Image URL</Form.Label>
         <Form.Control
           value={imageUrl}
-          onChange={(e) => {
-            setImageUrl(e.target.value);
-          }}
+          onChange={(e) => setImageUrl(e.target.value)}
           type="text"
           placeholder="Image URL"
         />
@@ -76,12 +64,11 @@ export const CreateArticle = () => {
         <Form.Label>Category</Form.Label>
         <Form.Select
           value={categoryId}
-          onChange={(e) => {
-            setCategoryId(e.target.value);
-          }}
-          aria-label="Default select example"
+          onChange={(e) => setCategoryId(e.target.value)}
         >
-          <option>Choose Category</option>
+          <option hidden value="">
+            Choose category
+          </option>
           {categories.map((category, index) => {
             return (
               <option key={`option-${index}`} value={category.id}>
@@ -96,9 +83,7 @@ export const CreateArticle = () => {
         <Form.Label>Description</Form.Label>
         <Form.Control
           value={description}
-          onChange={(e) => {
-            setDescription(e.target.value);
-          }}
+          onChange={(e) => setDescription(e.target.value)}
           as="textarea"
           rows={3}
         />
@@ -108,9 +93,7 @@ export const CreateArticle = () => {
         <Form.Label>Text</Form.Label>
         <Form.Control
           value={text}
-          onChange={(e) => {
-            setText(e.target.value);
-          }}
+          onChange={(e) => setText(e.target.value)}
           as="textarea"
           rows={10}
         />
@@ -121,4 +104,4 @@ export const CreateArticle = () => {
       </Button>
     </Form>
   );
-};
+}

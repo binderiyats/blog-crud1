@@ -10,6 +10,8 @@ import Header from "./component/Header";
 import Articles from "./pages/Articles";
 import SingleArticle from "./pages/SingleArticle";
 import Categories from "./pages/Categories";
+import { CreateArticle } from "./component/Article/CreateArticle";
+import EditArticle from "./component/Article/EditArticle";
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
         <Route path="/articles" element={<Articles />} />
         <Route path="/articles/:id" element={<SingleArticle />} />
         <Route path="/articles/cat/:categoryId" element={<Articles />} />
+        <Route path="/articles/create" element={<CreateArticle />} />
+        <Route path="/articles/edit/:id" element={<EditArticle />} />
         <Route path="/categories" element={<Categories />} />
       </Routes>
     </diV>

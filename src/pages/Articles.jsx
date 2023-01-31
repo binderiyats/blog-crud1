@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { CreateArticle } from "../component/Article/CreateArticle";
 import { Button } from "react-bootstrap";
 import { DynamicModal } from "../component/DynamicModal";
@@ -39,22 +39,23 @@ const ArticleCard = ({ article }) => {
 export default function Articles() {
   const [articles, setArticles] = useState([]);
   const { categoryId } = useParams();
+  const navigate = useNavigate();
   const [modalShow, setModalShow] = useState(false);
   const [modalContent, setModalContent] = useState("");
   const [modalTitle, setModalTitle] = useState("");
 
-  const modalClose = () => {
-    setModalShow(false);
-  };
-  const submitArticle = (article) => {
-    setArticles([...articles, article]);
-    modalClose();
-  };
-  const showAddModal = () => {
-    setModalTitle("Create Article");
-    setModalContent(<CreateArticle submitArticle={submitArticle} />);
-    setModalShow(true);
-  };
+  // const modalClose = () => {
+  //   setModalShow(false);
+  // };
+  // const submitArticle = (article) => {
+  //   setArticles([...articles, article]);
+  //   modalClose();
+  // };
+  // const showAddModal = () => {
+  //   setModalTitle("Create Article");
+  //   setModalContent(<CreateArticle submitArticle={submitArticle} />);
+  //   setModalShow(true);
+  // };
 
   useEffect(() => {
     let dataUrl = `http://localhost:8000/articles`;
@@ -75,18 +76,18 @@ export default function Articles() {
   return (
     <div className="row">
       <div className="d-flex justify-content-end mb-3">
-        <Button onClick={showAddModal}>Create</Button>
+        <Button onClick={() => navigate("/articles/create")}>Create</Button>
       </div>
       {articles.map((article, index) => {
         return <ArticleCard key={`article-${index}`} article={article} />;
       })}
 
-      <DynamicModal
+      {/* <DynamicModal
         title={modalTitle}
         content={modalContent}
         handleClose={modalClose}
         show={modalShow}
-      />
+      /> */}
     </div>
   );
 }
