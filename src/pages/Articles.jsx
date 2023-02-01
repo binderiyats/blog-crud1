@@ -6,6 +6,8 @@ import { Button } from "react-bootstrap";
 import { DynamicModal } from "../component/DynamicModal";
 
 const ArticleCard = ({ article }) => {
+  const navigate = useNavigate();
+
   return (
     <div className="col-4">
       <div className="card" style={{ width: "18rem" }}>
@@ -22,7 +24,13 @@ const ArticleCard = ({ article }) => {
               Read more
             </Link>
             <div className="d-flex gap-1">
-              <Button onClick={() => {}} variant="success" size="sm">
+              <Button
+                onClick={() => {
+                  navigate(`/articles/edit/${article.id}`);
+                }}
+                variant="success"
+                size="sm"
+              >
                 Edit
               </Button>
               <Button onClick={() => {}} variant="danger" size="sm">

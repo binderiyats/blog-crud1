@@ -1,20 +1,29 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 
 export default function EditArticle() {
   const [categories, setCategories] = useState([]);
-  const [title, setTitle] = useState();
-  const [imageUrl, setImageUrl] = useState();
-  const [categoryId, setCategoryId] = useState();
-  const [description, setDescription] = useState();
-  const [text, setText] = useState();
+  const [title, setTitle] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  const [categoryId, setCategoryId] = useState("");
+  const [description, setDescription] = useState("");
+  const [text, setText] = useState("");
   const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get(`http://localhost:8000/articles`).then((res) => {
       setCategories(res.data);
+    });
+
+    axios.get(`http://localhost:8000/articles/${id}`).then((res) => {
+      setTitle(res.data.title);
+      setImageUrl(res.data.imageUrl);
+      setCategoryId(res.data.categoryId);
+      setText(res.data.text);
+      setDescription(res.data.description);
     });
   }, []);
 
@@ -27,9 +36,9 @@ export default function EditArticle() {
       text,
     };
     axios
-      .patch(`http://localhost:8000/articles/${article.id}`, editedArticle)
+      .patch(`http://localhost:8000/articles/${id}`, editedArticle)
       .then((res) => {
-        updateArticle(res.data);
+        navigate(`/articles`);
       })
       .catch((err) => console.log(err));
   };
